@@ -66,7 +66,7 @@ class DataService {
         var postRequest = URLRequest(url: composedURL)
         postRequest.httpMethod = "POST"
         
-        let authString = "SagarKadam32:passgithub12345"
+        let authString = "SagarKadam32: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"
         var authStringBase64 = ""
         
         if let authData = authString.data(using: .utf8) {
