@@ -35,6 +35,14 @@ class ViewController: UIViewController {
         }
         */
         
+        DataService.shared.starUnstarGist(id: "7648c2c27aaf659b2349c9d3bad2fa6d", star: true) { success in
+            
+            if success {
+                print("Gist Successfully Starred!!")
+            }else{
+                print("Gist was not able to be starred..")
+            }
+        }
          
     }
     

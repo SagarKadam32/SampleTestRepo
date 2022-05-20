@@ -66,14 +66,14 @@ class DataService {
         var postRequest = URLRequest(url: composedURL)
         postRequest.httpMethod = "POST"
         
-        let authString = "SagarKadam32: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"
-        var authStringBase64 = ""
+//        let authString = "SagarKadam32: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"
+//        var authStringBase64 = ""
+//
+//        if let authData = authString.data(using: .utf8) {
+//            authStringBase64 = authData.base64EncodedString()
+//        }
         
-        if let authData = authString.data(using: .utf8) {
-            authStringBase64 = authData.base64EncodedString()
-        }
-        
-        postRequest.setValue("Basic \(authStringBase64)", forHTTPHeaderField: "Authorization")
+        postRequest.setValue("Basic \(createAuthCredentials())", forHTTPHeaderField: "Authorization")
         postRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         postRequest.setValue("application/json", forHTTPHeaderField: "Accept")
         
@@ -114,6 +114,47 @@ class DataService {
         components.path = path
         
         return components
+    }
+    
+    func createAuthCredentials() -> String {
+        let authString = "SagarKadam32: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"
+        var authStringBase64 = ""
+        
+        if let authData = authString.data(using: .utf8) {
+            authStringBase64 = authData.base64EncodedString()
+        }
+        return authStringBase64
+    }
+    
+    func starUnstarGist(id: String, star: Bool, completion: @escaping (Bool) -> Void){
+        let starComponents = createURLComponents(path: "/gists/\(id)/star")
+        
+        guard let composeURL = starComponents.url else{
+            print("Component Compopsition Failed..")
+            return
+        }
+        
+        var starRequest = URLRequest(url: composeURL)
+        starRequest.httpMethod = star == true ? "PUT" : "DELETE"
+        
+        starRequest.setValue("0", forHTTPHeaderField: "Content-Length")
+        starRequest.setValue("Basic \(createAuthCredentials())", forHTTPHeaderField: "Authorization")
+        starRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        starRequest.setValue("application/json", forHTTPHeaderField: "Accept")
+        
+        URLSession.shared.dataTask(with: starRequest) { (data, response, error) in
+            
+            if let httpResponse = response as?  HTTPURLResponse {
+                print("Status Code = \(httpResponse.statusCode)")
+                
+                if httpResponse.statusCode == 204{
+                    completion(true)
+                }else{
+                    completion(false)
+                }
+            }
+        }.resume()
+        
     }
 }
     
