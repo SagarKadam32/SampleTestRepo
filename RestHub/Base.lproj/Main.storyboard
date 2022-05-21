@@ -77,6 +77,9 @@
                             <constraint firstItem="ks1-4x-jab" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="s9h-SM-dx0"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="feedTableView" destination="7qq-Wh-P3F" id="qaI-bp-Lq1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

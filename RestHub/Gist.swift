@@ -36,7 +36,7 @@ extension Gist : Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: CodingKeys.id)
         self.isPublic = try container.decode(Bool.self, forKey: CodingKeys.isPublic)
-        self.description = try container.decode(String.self, forKey: CodingKeys.description) ?? "Description is nil"
+        self.description = try container.decodeIfPresent(String.self, forKey: CodingKeys.description) ?? "Description is nil"
         self.files = try container.decode([String:File].self, forKey: CodingKeys.files)
     }
 }
